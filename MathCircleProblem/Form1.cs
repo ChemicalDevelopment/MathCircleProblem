@@ -244,6 +244,7 @@ namespace MathCircleProblem
         {
             _results.Clear();
             ChartResults();
+            //test2
 
             decimal increment = nudSeriesIncrement.Value;
 
