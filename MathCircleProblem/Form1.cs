@@ -22,7 +22,7 @@ namespace MathCircleProblem
 
             float degrees = 45;
             _theta = (float)(degrees * Math.PI / 180);
-          
+
             nudThetaDegrees.Value = (decimal)degrees;
             nudThetaRadians.Value = (decimal)_theta;
 
@@ -256,7 +256,6 @@ namespace MathCircleProblem
                 _results[nudThetaDegrees.Value] = (int)nudNumberOfPoints.Value;
 
                 chart1.Series["My Series"].Points.DataBindXY(_results.Keys, _results.Values);
-
             }
         }
     }
