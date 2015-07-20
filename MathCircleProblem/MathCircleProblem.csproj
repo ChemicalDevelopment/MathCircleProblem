@@ -59,6 +59,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphicsExtensions.cs" />
+    <Compile Include="Images\AnimatedGifEncoder.cs" />
+    <Compile Include="Images\GifDecoder.cs" />
+    <Compile Include="Images\LZWEncoder.cs" />
+    <Compile Include="Images\NeuQuant.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

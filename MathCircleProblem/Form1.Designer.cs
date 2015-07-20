@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.nudThetaDegrees = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,6 +52,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btnSaveAnimatedGif = new System.Windows.Forms.Button();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.nudThetaDegrees)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudThetaRadians)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudNumberOfPoints)).BeginInit();
@@ -197,7 +199,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(25, 500);
+            this.button6.Location = new System.Drawing.Point(12, 617);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 13;
@@ -214,16 +216,16 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(704, 22);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(561, 618);
             this.chart1.TabIndex = 14;
             this.chart1.Text = "chart1";
@@ -280,11 +282,28 @@
             this.saveFileDialog1.FileName = "Circle.bmp";
             this.saveFileDialog1.Filter = "Bitmap Files|*.bmp|All Files|*.*";
             // 
+            // btnSaveAnimatedGif
+            // 
+            this.btnSaveAnimatedGif.Location = new System.Drawing.Point(25, 487);
+            this.btnSaveAnimatedGif.Name = "btnSaveAnimatedGif";
+            this.btnSaveAnimatedGif.Size = new System.Drawing.Size(152, 23);
+            this.btnSaveAnimatedGif.TabIndex = 19;
+            this.btnSaveAnimatedGif.Text = "Save Animated Gif";
+            this.btnSaveAnimatedGif.UseVisualStyleBackColor = true;
+            this.btnSaveAnimatedGif.Click += new System.EventHandler(this.btnSaveAnimatedGif_Click);
+            // 
+            // saveFileDialog2
+            // 
+            this.saveFileDialog2.DefaultExt = "bmp";
+            this.saveFileDialog2.FileName = "Circle.gif";
+            this.saveFileDialog2.Filter = "Gif Files|*.gif|All Files|*.*";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1277, 652);
+            this.Controls.Add(this.btnSaveAnimatedGif);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.nudSeriesIncrement);
@@ -339,6 +358,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button btnSaveAnimatedGif;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
 
 
 

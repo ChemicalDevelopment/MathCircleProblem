@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MathCircleProblem.Images;
 
 namespace MathCircleProblem
 {
@@ -21,7 +23,7 @@ namespace MathCircleProblem
             _radius = 1 * SCALE;
 
             double degrees = 45;
-            _theta = (double)(degrees * Math.PI / 180);
+            _theta = degrees * Math.PI / 180;
 
             nudThetaDegrees.Value = (decimal)degrees;
             nudThetaRadians.Value = (decimal)_theta;
@@ -47,11 +49,11 @@ namespace MathCircleProblem
 
         private void DrawImage()
         {
-            
+
             //Graphics g = mathSurface.CreateGraphics();
             //var g = new Graphics()
-           // mathSurface = new Bitmap(500, 500);
-            
+            // mathSurface = new Bitmap(500, 500);
+
             Graphics g = Graphics.FromImage(_mathSurface);
             g.Clear(Color.White);
 
@@ -66,7 +68,7 @@ namespace MathCircleProblem
 
             float y = (float)Math.Sin(angleToDraw);
             float x = (float)Math.Cos(angleToDraw);
-            
+
             return new PointF(x, y);
         }
 
@@ -116,12 +118,12 @@ namespace MathCircleProblem
 
         private double DegreesToRadians(double deg)
         {
-            return (double)(deg * Math.PI / 180.0);
+            return deg * Math.PI / 180.0;
         }
 
         private double RadiansToDegrees(double rad)
         {
-            return (double)(rad * 180.0 / Math.PI);
+            return rad * 180.0 / Math.PI;
         }
 
         private void DrawMathLine(Graphics g, Pen p, double x1, double y1, double x2, double y2)
@@ -144,16 +146,16 @@ namespace MathCircleProblem
 
         public float MathXtoScreenX(double mathX)
         {
-            double centerX = (double)(_mathSurface.Width / 2.0);
+            double centerX = _mathSurface.Width / 2.0;
 
-            return (float) (centerX + mathX * SCALE);
+            return (float)(centerX + mathX * SCALE);
         }
 
         public float MathYtoScreenY(double mathY)
         {
-            double centerY = (double)(_mathSurface.Height / 2.0);
+            double centerY = _mathSurface.Height / 2.0;
 
-            return (float) (centerY - mathY * SCALE);
+            return (float)(centerY - mathY * SCALE);
         }
 
         private void nudThetaDegrees_ValueChanged(object sender, EventArgs e)
@@ -211,7 +213,7 @@ namespace MathCircleProblem
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-           // mathSurface.Refresh();
+            // mathSurface.Refresh();
 
             DisplayImage();
         }
@@ -285,6 +287,62 @@ namespace MathCircleProblem
             {
                 var filename = saveFileDialog1.FileName;
                 _mathSurface.Save(filename);
+            }
+        }
+
+        private void SaveAnimatedGif()
+        {
+            var filename = saveFileDialog2.FileName;
+
+            decimal increment = nudSeriesIncrement.Value;
+
+            var images = new List<Image>();
+            for (decimal idx = 0; idx < 90; idx += increment)
+            {
+                _color = Color.FromArgb(0, (int)((idx / 90m) * 255m), (int)(((90 - idx) / 90m) * 255m));
+                UpdateTheta(idx);
+
+                var image = _mathSurface.Clone() as Bitmap;
+                images.Add(image);
+
+                Application.DoEvents();
+            }
+            try
+            {
+                UseWaitCursor = true;
+
+                if (images.Count > 0)
+                {
+                    int animationDelayMs = 200;
+                    var e = new AnimatedGifEncoder();
+                    using (var ms = new FileStream(filename, FileMode.Create))
+                    {
+                        e.Start(ms);
+                        e.SetDelay(animationDelayMs);
+                        //-1:no repeat,0:always repeat
+                        e.SetRepeat(0);
+
+                        foreach (var img in images)
+                        {
+                            e.AddFrame(img);
+                            Application.DoEvents();
+                        }
+                        e.Finish();
+                    }
+                }
+            }
+            finally
+            {
+                UseWaitCursor = false;
+            }
+        }
+
+        private void btnSaveAnimatedGif_Click(object sender, EventArgs e)
+        {
+            var dr = saveFileDialog2.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                SaveAnimatedGif();
             }
         }
     }
