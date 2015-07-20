@@ -8,11 +8,11 @@ namespace MathCircleProblem
 {
     public partial class Form1 : Form
     {
-        private const float SCALE = 200; // pixels to math scale
-        private readonly float _radius;
-        private float _theta;
+        private const double SCALE = 200; // pixels to math scale
+        private readonly double _radius;
+        private double _theta;
         private Color _color = Color.Green;
-        private float _slop = .0001f;
+        private double _slop = .0001f;
         private readonly Dictionary<decimal, int> _results = new Dictionary<decimal, int>();
         private readonly Bitmap _mathSurface = new Bitmap(500, 500);
         public Form1()
@@ -20,8 +20,8 @@ namespace MathCircleProblem
             InitializeComponent();
             _radius = 1 * SCALE;
 
-            float degrees = 45;
-            _theta = (float)(degrees * Math.PI / 180);
+            double degrees = 45;
+            _theta = (double)(degrees * Math.PI / 180);
 
             nudThetaDegrees.Value = (decimal)degrees;
             nudThetaRadians.Value = (decimal)_theta;
@@ -66,7 +66,7 @@ namespace MathCircleProblem
 
             float y = (float)Math.Sin(angleToDraw);
             float x = (float)Math.Cos(angleToDraw);
-
+            
             return new PointF(x, y);
         }
 
@@ -114,17 +114,17 @@ namespace MathCircleProblem
             nudNumberOfPoints.Value = points.Count - 1;
         }
 
-        private float DegreesToRadians(float deg)
+        private double DegreesToRadians(double deg)
         {
-            return (float)(deg * Math.PI / 180.0);
+            return (double)(deg * Math.PI / 180.0);
         }
 
-        private float RadiansToDegrees(float rad)
+        private double RadiansToDegrees(double rad)
         {
-            return (float)(rad * 180.0 / Math.PI);
+            return (double)(rad * 180.0 / Math.PI);
         }
 
-        private void DrawMathLine(Graphics g, Pen p, float x1, float y1, float x2, float y2)
+        private void DrawMathLine(Graphics g, Pen p, double x1, double y1, double x2, double y2)
         {
             g.DrawLine(p, MathXtoScreenX(x1), MathYtoScreenY(y1), MathXtoScreenX(x2), MathYtoScreenY(y2));
         }
@@ -139,27 +139,27 @@ namespace MathCircleProblem
             var x = MathXtoScreenX(0);
             var y = MathYtoScreenY(0);
 
-            g.DrawCircle(myPen, x, y, _radius);
+            g.DrawCircle(myPen, x, y, (float)_radius);
         }
 
-        public float MathXtoScreenX(float mathX)
+        public float MathXtoScreenX(double mathX)
         {
-            float centerX = (float)(_mathSurface.Width / 2.0);
+            double centerX = (double)(_mathSurface.Width / 2.0);
 
-            return centerX + mathX * SCALE;
+            return (float) (centerX + mathX * SCALE);
         }
 
-        public float MathYtoScreenY(float mathY)
+        public float MathYtoScreenY(double mathY)
         {
-            float centerY = (float)(_mathSurface.Height / 2.0);
+            double centerY = (double)(_mathSurface.Height / 2.0);
 
-            return centerY - mathY * SCALE;
+            return (float) (centerY - mathY * SCALE);
         }
 
         private void nudThetaDegrees_ValueChanged(object sender, EventArgs e)
         {
             var deg = nudThetaDegrees.Value;
-            var rad = DegreesToRadians((float)deg);
+            var rad = DegreesToRadians((double)deg);
             nudThetaRadians.Value = (decimal)rad;
 
             _theta = rad;
@@ -170,10 +170,10 @@ namespace MathCircleProblem
         private void nudThetaRadians_ValueChanged(object sender, EventArgs e)
         {
             var rad = nudThetaRadians.Value;
-            var deg = RadiansToDegrees((float)rad);
+            var deg = RadiansToDegrees((double)rad);
             nudThetaDegrees.Value = (decimal)deg;
 
-            _theta = (float)rad;
+            _theta = (double)rad;
 
             //mathSurface.Refresh();
             DisplayImage();
