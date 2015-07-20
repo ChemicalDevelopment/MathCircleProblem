@@ -8,17 +8,17 @@ namespace MathCircleProblem
 {
     public partial class Form1 : Form
     {
-        private const float scale = 200; // pixels to math scale
+        private const float SCALE = 200; // pixels to math scale
         private readonly float _radius;
         private float _theta;
         private Color _color = Color.Green;
         private float _slop = .0001f;
         private readonly Dictionary<decimal, int> _results = new Dictionary<decimal, int>();
-
+        private readonly Bitmap _mathSurface = new Bitmap(500, 500);
         public Form1()
         {
             InitializeComponent();
-            _radius = 1 * scale;
+            _radius = 1 * SCALE;
 
             float degrees = 45;
             _theta = (float)(degrees * Math.PI / 180);
@@ -31,15 +31,29 @@ namespace MathCircleProblem
                 //SetDoubleBuffered(mathSurface);
                 // SetDoubleBuffered(this);
             }
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            DisplayImage();
         }
 
-        private void mathSurface_Paint(object sender, PaintEventArgs e)
+        private void DisplayImage()
         {
-            Graphics g = mathSurface.CreateGraphics();
+            DrawImage();
+            pictureBox1.Image = _mathSurface;
+        }
+
+        private void DrawImage()
+        {
+            
+            //Graphics g = mathSurface.CreateGraphics();
+            //var g = new Graphics()
+           // mathSurface = new Bitmap(500, 500);
+            
+            Graphics g = Graphics.FromImage(_mathSurface);
+            g.Clear(Color.White);
 
             DrawAxesAndCircle(g);
 
@@ -130,16 +144,16 @@ namespace MathCircleProblem
 
         public float MathXtoScreenX(float mathX)
         {
-            float centerX = (float)(mathSurface.Width / 2.0);
+            float centerX = (float)(_mathSurface.Width / 2.0);
 
-            return centerX + mathX * scale;
+            return centerX + mathX * SCALE;
         }
 
         public float MathYtoScreenY(float mathY)
         {
-            float centerY = (float)(mathSurface.Height / 2.0);
+            float centerY = (float)(_mathSurface.Height / 2.0);
 
-            return centerY - mathY * scale;
+            return centerY - mathY * SCALE;
         }
 
         private void nudThetaDegrees_ValueChanged(object sender, EventArgs e)
@@ -149,7 +163,8 @@ namespace MathCircleProblem
             nudThetaRadians.Value = (decimal)rad;
 
             _theta = rad;
-            mathSurface.Refresh();
+            //mathSurface.Refresh();
+            DisplayImage();
         }
 
         private void nudThetaRadians_ValueChanged(object sender, EventArgs e)
@@ -160,7 +175,8 @@ namespace MathCircleProblem
 
             _theta = (float)rad;
 
-            mathSurface.Refresh();
+            //mathSurface.Refresh();
+            DisplayImage();
         }
 
         private void UpdateTheta(decimal deg)
@@ -195,7 +211,9 @@ namespace MathCircleProblem
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            mathSurface.Refresh();
+           // mathSurface.Refresh();
+
+            DisplayImage();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -256,6 +274,17 @@ namespace MathCircleProblem
                 _results[nudThetaDegrees.Value] = (int)nudNumberOfPoints.Value;
 
                 chart1.Series["My Series"].Points.DataBindXY(_results.Keys, _results.Values);
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.FileName = "Circle-" + _theta + ".bmp";
+            var dr = saveFileDialog1.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                var filename = saveFileDialog1.FileName;
+                _mathSurface.Save(filename);
             }
         }
     }
