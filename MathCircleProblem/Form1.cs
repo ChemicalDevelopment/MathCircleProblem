@@ -99,6 +99,7 @@ namespace MathCircleProblem
 
         private void DrawLines(Graphics g)
         {
+            Pen p1 = new Pen(Color.Red, 2);
             Pen p = new Pen(_color, 2);
             var points = GetPoints();
             PointF lastPoint = new PointF(-1, 0); //Start at left part of circle
@@ -107,7 +108,8 @@ namespace MathCircleProblem
             {
                 var point = points[idx];
 
-                DrawMathLine(g, p, lastPoint.X, lastPoint.Y, point.X, point.Y);
+                Pen pen = idx == 1 ? p1 : p;
+                DrawMathLine(g, pen, lastPoint.X, lastPoint.Y, point.X, point.Y);
 
                 lastPoint = point;
             }
